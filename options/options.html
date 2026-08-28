@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocusShield — Dashboard & Settings</title>
+  <link rel="stylesheet" href="options.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="logo">🛡️</span>
+        <h1>FocusShield</h1>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-section="section-schedule">
+          <span class="nav-icon">📅</span> Schedule & Days
+        </button>
+        <button class="nav-item" data-section="section-timer">
+          <span class="nav-icon">⏱️</span> Focus Timer
+        </button>
+        <button class="nav-item" data-section="section-quotes">
+          <span class="nav-icon">💬</span> Custom Quotes
+        </button>
+        <button class="nav-item" data-section="section-security">
+          <span class="nav-icon">🔒</span> Typing Friction
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>FocusShield v1.0.0</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content">
+      
+      <!-- 1. SCHEDULE SECTION -->
+      <section id="section-schedule" class="section active">
+        <div class="section-header">
+          <h2>Schedule & Active Days</h2>
+          <p>Set specific days and hours when site blocking is automatically enforced.</p>
+        </div>
+
+        <div class="card toggle-card">
+          <div>
+            <h3>Enable Schedule Mode</h3>
+            <p class="card-desc">When enabled, site blocking only activates during the hours & days set below.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="enable-schedule-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="card">
+          <h3>Active Days of the Week</h3>
+          <div class="days-grid">
+            <button class="day-chip" data-day="Mon">Monday</button>
+            <button class="day-chip" data-day="Tue">Tuesday</button>
+            <button class="day-chip" data-day="Wed">Wednesday</button>
+            <button class="day-chip" data-day="Thu">Thursday</button>
+            <button class="day-chip" data-day="Fri">Friday</button>
+            <button class="day-chip" data-day="Sat">Saturday</button>
+            <button class="day-chip" data-day="Sun">Sunday</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Daily Blocking Hours</h3>
+          <div class="time-row">
+            <div class="field">
+              <label for="start-time">Start Time</label>
+              <input type="time" id="start-time" value="09:00">
+            </div>
+            <div class="field">
+              <label for="end-time">End Time</label>
+              <input type="time" id="end-time" value="17:00">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. FOCUS TIMER SECTION -->
+      <section id="section-timer" class="section">
+        <div class="section-header">
+          <h2>Pomodoro & Focus Timer</h2>
+          <p>Configure default focus session lengths for quick work sprints.</p>
+        </div>
+
+        <div class="card">
+          <h3>Default Session Length</h3>
+          <div class="preset-grid">
+            <button class="preset-btn" data-minutes="25">25 Min (Pomodoro)</button>
+            <button class="preset-btn" data-minutes="45">45 Min (Deep Work)</button>
+            <button class="preset-btn" data-minutes="60">60 Min (Extended)</button>
+          </div>
+          <div class="field" style="margin-top: 16px;">
+            <label for="custom-minutes">Custom Duration (Minutes)</label>
+            <input type="number" id="custom-minutes" min="1" max="480" value="25">
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CUSTOM QUOTES SECTION -->
+      <section id="section-quotes" class="section">
+        <div class="section-header">
+          <h2>Custom Motivational Quotes</h2>
+          <p>Personalize the text that displays when you attempt to visit a blocked website.</p>
+        </div>
+
+        <div class="card">
+          <h3>Personal Motivation Banner</h3>
+          <div class="field">
+            <label for="custom-quote">Your Personal Words / Quote</label>
+            <textarea id="custom-quote" rows="4" placeholder="Write a message to remind yourself of your goals..."></textarea>
+          </div>
+          <div class="quote-preview">
+            <span class="preview-label">Preview on Blocked Screen:</span>
+            <blockquote id="quote-preview-text">"Concentrate all your thoughts upon the work in hand."</blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. TYPING FRICTION SECTION -->
+      <section id="section-security" class="section">
+        <div class="section-header">
+          <h2>Typing Challenge Phrase</h2>
+          <p>Customize the sentence you must type before pausing FocusShield.</p>
+        </div>
+
+        <div class="card">
+          <h3>Custom Phrase</h3>
+          <div class="field">
+            <label for="custom-phrase">Required Typing Sentence</label>
+            <input type="text" id="custom-phrase" placeholder="e.g. I choose focus over distraction">
+            <small class="field-hint">Leave blank to use randomized default phrases.</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Save Floating Action Bar -->
+      <div class="save-bar">
+        <span id="save-status">Settings saved locally.</span>
+        <button id="save-btn" class="primary-btn">Save All Changes</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">✓ Settings saved successfully!</div>
+
+  <script src="options.js"></script>
+</body>
+</html>

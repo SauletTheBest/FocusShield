@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FocusShield — Pause Protection</title>
+    <link rel="stylesheet" href="challenge.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="card">
+        <div class="shield-icon">🛡️</div>
+        <h1>Pause Protection?</h1>
+        <p class="desc">To pause FocusShield, type this phrase exactly:</p>
+
+        <div class="phrase-box" id="challenge-phrase">Loading...</div>
+
+        <input type="text" id="challenge-input" placeholder="Type the phrase above..." autocomplete="off"
+            spellcheck="false">
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="actions">
+            <button id="cancel-btn">Cancel</button>
+            <button id="confirm-btn" disabled>Pause Shield</button>
+        </div>
+    </div>
+
+    <script src="challenge.js"></script>
+</body>
+
+</html>

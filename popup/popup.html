@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FocusShield</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Header with Brand & Settings Gear -->
+    <header>
+      <div class="brand">
+        <span class="logo">🛡️</span>
+        <h2>FocusShield</h2>
+      </div>
+      <button id="open-settings-btn" class="icon-btn" title="Open Full Settings">⚙️</button>
+    </header>
+
+    <!-- Protection Status & Pause Button -->
+    <div class="status-card" id="status-card">
+      <div class="status-info">
+        <span class="status-dot active" id="status-dot"></span>
+        <span id="status-text">Protection Active</span>
+      </div>
+      <button id="pause-btn" class="pause-btn">Pause</button>
+    </div>
+
+    <!-- Quick Add Site -->
+    <div class="input-group">
+      <input type="text" id="site-input" placeholder="Add website e.g. reddit.com">
+      <button id="add-btn">Add</button>
+    </div>
+
+    <!-- Blocked Sites List -->
+    <div class="list-section">
+      <div class="list-header">
+        <span>Blocked Websites</span>
+        <span id="site-count" class="badge">0</span>
+      </div>
+      <ul id="site-list"></ul>
+    </div>
+  </div>
+
+  <!-- TYPING CHALLENGE MODAL -->
+  <div id="challenge-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>⚠️ Pause Protection</h3>
+      <p class="modal-desc">Type the phrase below to pause FocusShield:</p>
+      <div id="challenge-phrase" class="phrase-box">I will stay disciplined</div>
+      <input type="text" id="challenge-input" placeholder="Type sentence here..." autocomplete="off">
+      <div class="modal-actions">
+        <button id="cancel-challenge-btn" class="modal-cancel">Cancel</button>
+        <button id="confirm-challenge-btn" class="modal-confirm" disabled>Pause Shield</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
