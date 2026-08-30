@@ -20,9 +20,12 @@
         <button class="nav-item active" data-section="section-schedule">
           <span class="nav-icon">📅</span> Schedule & Days
         </button>
-        <button class="nav-item" data-section="section-timer">
-          <span class="nav-icon">⏱️</span> Focus Timer
+        <button class="nav-item" data-section="section-sites">
+          <span class="nav-icon">🚫</span> Blocked Sites
         </button>
+        <!-- <button class="nav-item" data-section="section-timer">
+          <span class="nav-icon">⏱️</span> Focus Timer
+        </button> -->
         <button class="nav-item" data-section="section-quotes">
           <span class="nav-icon">💬</span> Custom Quotes
         </button>
@@ -46,17 +49,6 @@
           <p>Set specific days and hours when site blocking is automatically enforced.</p>
         </div>
 
-        <div class="card toggle-card">
-          <div>
-            <h3>Enable Schedule Mode</h3>
-            <p class="card-desc">When enabled, site blocking only activates during the hours & days set below.</p>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="enable-schedule-toggle">
-            <span class="slider"></span>
-          </label>
-        </div>
-
         <div class="card">
           <h3>Active Days of the Week</h3>
           <div class="days-grid">
@@ -74,19 +66,45 @@
           <h3>Daily Blocking Hours</h3>
           <div class="time-row">
             <div class="field">
-              <label for="start-time">Start Time</label>
+              <label for="start-time">Start Time (included)</label>
               <input type="time" id="start-time" value="09:00">
             </div>
             <div class="field">
-              <label for="end-time">End Time</label>
+              <label for="end-time">End Time (included)</label>
               <input type="time" id="end-time" value="17:00">
             </div>
           </div>
         </div>
+
+        <div class="attention-card">
+          <span class="attention-icon">⚠️</span>
+          <p>When the scheduled time has passed, type the website URL into the address bar manually to access it.</p>
+        </div>
       </section>
 
-      <!-- 2. FOCUS TIMER SECTION -->
-      <section id="section-timer" class="section">
+      <!-- 2. BLOCKED SITES SECTION -->
+      <section id="section-sites" class="section">
+        <div class="section-header">
+          <h2>Blocked Sites</h2>
+          <p>Manage your personal list of websites restricted during active focus hours.</p>
+        </div>
+
+        <div class="card">
+          <h3>Add a Website</h3>
+          <div class="input-row">
+            <input type="text" id="options-site-input" placeholder="e.g. reddit.com or youtube.com">
+            <button id="options-add-btn" class="primary-btn">Add Site</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Current Blocklist <span id="options-site-count" class="badge">0</span></h3>
+          <ul id="options-site-list" class="site-list"></ul>
+        </div>
+      </section>
+
+      <!-- 3. FOCUS TIMER SECTION -->
+      <!-- <section id="section-timer" class="section">
         <div class="section-header">
           <h2>Pomodoro & Focus Timer</h2>
           <p>Configure default focus session lengths for quick work sprints.</p>
@@ -104,9 +122,9 @@
             <input type="number" id="custom-minutes" min="1" max="480" value="25">
           </div>
         </div>
-      </section>
+      </section> -->
 
-      <!-- 3. CUSTOM QUOTES SECTION -->
+      <!-- 4. CUSTOM QUOTES SECTION -->
       <section id="section-quotes" class="section">
         <div class="section-header">
           <h2>Custom Motivational Quotes</h2>
@@ -118,6 +136,7 @@
           <div class="field">
             <label for="custom-quote">Your Personal Words / Quote</label>
             <textarea id="custom-quote" rows="4" placeholder="Write a message to remind yourself of your goals..."></textarea>
+            <small class="field-hint">Leave blank to display a random quote from famous authors.</small>
           </div>
           <div class="quote-preview">
             <span class="preview-label">Preview on Blocked Screen:</span>
@@ -126,7 +145,7 @@
         </div>
       </section>
 
-      <!-- 4. TYPING FRICTION SECTION -->
+      <!-- 5. TYPING FRICTION SECTION -->
       <section id="section-security" class="section">
         <div class="section-header">
           <h2>Typing Challenge Phrase</h2>

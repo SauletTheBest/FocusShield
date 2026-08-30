@@ -87,10 +87,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     sites.forEach((site, index) => {
       const li = document.createElement('li');
-      li.innerHTML = `
-        <span>${site}</span>
-        <button class="delete-btn" data-index="${index}">&times;</button>
-      `;
+      const span = document.createElement('span');
+      span.textContent = site;
+
+      const btn = document.createElement('button');
+      btn.className = 'delete-btn';
+      btn.setAttribute('data-index', index);
+      btn.textContent = '×';
+
+      li.appendChild(span);
+      li.appendChild(btn);
       siteList.appendChild(li);
     });
 

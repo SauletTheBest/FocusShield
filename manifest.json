@@ -3,7 +3,14 @@
   "name": "FocusShield - Site Blocker",
   "version": "1.0.0",
   "description": "Block distracting websites with customizable focus periods and modern UI.",
-
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "focus-shield@sauletthebest.dev",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
   "permissions": [
     "storage",
     "declarativeNetRequest",
@@ -11,15 +18,14 @@
     "alarms",
     "tabs"
   ],
-
   "host_permissions": [
     "<all_urls>"
   ],
-
   "background": {
-    "scripts": ["background/background.js"]
+    "scripts": [
+      "background/background.js"
+    ]
   },
-
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "FocusShield"
@@ -28,12 +34,17 @@
     "page": "options/options.html",
     "open_in_tab": true
   },
-
-
   "web_accessible_resources": [
     {
-      "resources": ["views/blocked.html", "views/challenge.html", "views/challenge.js", "views/challenge.css"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "views/blocked.html",
+        "views/challenge.html",
+        "views/challenge.js",
+        "views/challenge.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }

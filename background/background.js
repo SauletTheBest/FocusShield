@@ -1,11 +1,13 @@
-// Check if current time falls within active schedule hours
-function isWithinSchedule(enableSchedule, activeDays, startTime, endTime) {
-  // If schedule mode is disabled by user, return true (fall back to manual toggle)
-  if (!enableSchedule) {
-    return true; 
-  }
+// Helper: Convert "HH:MM" string to total minutes from midnight
+function timeToMinutes(timeStr) {
+  if (!timeStr) return 0;
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  return (hours || 0) * 60 + (minutes || 0);
+}
 
-  // If enabled but no times set yet, default to active
+// Check if current time falls within active schedule hours
+function isWithinSchedule(activeDays, startTime, endTime) {
+  // If no schedule parameters saved yet, default to active
   if (!activeDays || activeDays.length === 0 || !startTime || !endTime) {
     return true; 
   }
@@ -14,18 +16,21 @@ function isWithinSchedule(enableSchedule, activeDays, startTime, endTime) {
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const currentDay = dayNames[now.getDay()];
 
-  // If today is not an active day, schedule is inactive
+  // If today is NOT an active day selected in Options, schedule is inactive (unblock)
   if (!activeDays.includes(currentDay)) {
     return false;
   }
 
-  const currentHHMM = now.toTimeString().slice(0, 5);
+  // Convert current time and schedule bounds to numeric minutes
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const startMin = timeToMinutes(startTime);
+  const endMin = timeToMinutes(endTime);
 
-  if (startTime <= endTime) {
-    return currentHHMM >= startTime && currentHHMM <= endTime;
+  if (startMin <= endMin) {
+    return currentMinutes >= startMin && currentMinutes <= endMin;
   } else {
     // Overnight schedule (e.g. 22:00 to 06:00)
-    return currentHHMM >= startTime || currentHHMM <= endTime;
+    return currentMinutes >= startMin || currentMinutes <= endMin;
   }
 }
 
@@ -33,15 +38,12 @@ function isWithinSchedule(enableSchedule, activeDays, startTime, endTime) {
 async function updateBlockingRules() {
   const data = await browser.storage.local.get([
     'blockedSites', 'isBlockingActive',
-    'enableSchedule', 'activeDays', 'startTime', 'endTime'
+    'activeDays', 'startTime', 'endTime'
   ]);
 
   const blockedSites = data.blockedSites || [];
   const manualActive = data.isBlockingActive !== false;
-  
-  // Evaluate schedule logic
   const scheduleActive = isWithinSchedule(
-    data.enableSchedule,
     data.activeDays,
     data.startTime,
     data.endTime
@@ -60,7 +62,7 @@ async function updateBlockingRules() {
     return;
   }
 
-  // 1. Update dynamic rules
+  // 1. Update net request rules (blocking main_frame, sub_frame, xmlhttprequest, etc.)
   const newRules = blockedSites.map((domain, index) => {
     let cleanDomain = domain.toLowerCase().trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
     
@@ -73,7 +75,7 @@ async function updateBlockingRules() {
       },
       condition: {
         urlFilter: `||${cleanDomain}`,
-        resourceTypes: ["main_frame"]
+        resourceTypes: ["main_frame", "sub_frame", "xmlhttprequest", "other"]
       }
     };
   });
@@ -83,7 +85,7 @@ async function updateBlockingRules() {
     addRules: newRules
   });
 
-  // 2. Redirect open tabs matching blocked sites
+  // 2. Immediate redirect for any open matching tabs
   const tabs = await browser.tabs.query({});
   for (const tab of tabs) {
     if (tab.url) {
@@ -92,7 +94,7 @@ async function updateBlockingRules() {
         return tab.url.toLowerCase().includes(clean);
       });
 
-      if (isBlocked && !tab.url.includes("blocked.html")) {
+      if (isBlocked && !tab.url.includes("views/blocked.html")) {
         browser.tabs.update(tab.id, {
           url: browser.runtime.getURL("views/blocked.html")
         });
@@ -101,30 +103,36 @@ async function updateBlockingRules() {
   }
 }
 
-// Check schedule every minute
+// Background alarm every 1 minute
 browser.alarms.create("checkScheduleAlarm", { periodInMinutes: 1 });
-
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === "checkScheduleAlarm") {
     updateBlockingRules();
   }
 });
 
-// Storage changes listener
+// Event listeners to wake up script instantly on tab actions
+browser.tabs.onActivated.addListener(updateBlockingRules);
+browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status === 'loading') {
+    updateBlockingRules();
+  }
+});
+
+// Listen for storage changes
 browser.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === 'local') {
     updateBlockingRules();
   }
 });
 
-// Set sensible defaults on install
+// Startup & install listeners
 browser.runtime.onInstalled.addListener(async () => {
   const data = await browser.storage.local.get(['blockedSites', 'isBlockingActive']);
   if (!data.blockedSites) {
     await browser.storage.local.set({
       blockedSites: ['facebook.com', 'twitter.com', 'instagram.com'],
       isBlockingActive: true,
-      enableSchedule: false,
       activeDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
       startTime: '09:00',
       endTime: '17:00'
