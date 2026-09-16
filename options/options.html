@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FocusShield — Dashboard & Settings</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
   <link rel="stylesheet" href="options.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="app-layout">
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="brand">
-        <span class="logo">🛡️</span>
-        <h1>FocusShield</h1>
+        <img src="../icons/icon.svg" class="logo-img" alt="FocusShield Logo">
+        <div class="brand-text">
+          <h1>FocusShield</h1>
+        </div>
       </div>
 
       <nav class="nav-menu">
@@ -23,11 +26,8 @@
         <button class="nav-item" data-section="section-sites">
           <span class="nav-icon">🚫</span> Blocked Sites
         </button>
-        <!-- <button class="nav-item" data-section="section-timer">
-          <span class="nav-icon">⏱️</span> Focus Timer
-        </button> -->
         <button class="nav-item" data-section="section-quotes">
-          <span class="nav-icon">💬</span> Custom Quotes
+          <span class="nav-icon">💬</span> Quotes Library
         </button>
         <button class="nav-item" data-section="section-security">
           <span class="nav-icon">🔒</span> Typing Friction
@@ -35,140 +35,202 @@
       </nav>
 
       <div class="sidebar-footer">
-        <p>FocusShield v1.0.0</p>
+        <button id="theme-toggle-btn" class="theme-btn" title="Toggle Light/Dark Theme">
+          <span class="theme-icon">☀️</span>
+          <span class="theme-label">Light Mode</span>
+        </button>
+        <p class="version">FocusShield v1.0.2</p>
       </div>
     </aside>
 
-    <!-- Main Content Area -->
-    <main class="content">
+    <!-- Main Workspace Container (2-Column Grid) -->
+    <div class="workspace-grid">
       
-      <!-- 1. SCHEDULE SECTION -->
-      <section id="section-schedule" class="section active">
-        <div class="section-header">
-          <h2>Schedule & Active Days</h2>
-          <p>Set specific days and hours when site blocking is automatically enforced.</p>
-        </div>
-
-        <div class="card">
-          <h3>Active Days of the Week</h3>
-          <div class="days-grid">
-            <button class="day-chip" data-day="Mon">Monday</button>
-            <button class="day-chip" data-day="Tue">Tuesday</button>
-            <button class="day-chip" data-day="Wed">Wednesday</button>
-            <button class="day-chip" data-day="Thu">Thursday</button>
-            <button class="day-chip" data-day="Fri">Friday</button>
-            <button class="day-chip" data-day="Sat">Saturday</button>
-            <button class="day-chip" data-day="Sun">Sunday</button>
+      <!-- Left Column: Main Settings Forms -->
+      <main class="content">
+        
+        <!-- 1. SCHEDULE SECTION -->
+        <section id="section-schedule" class="section active">
+          <div class="section-header">
+            <h2>Schedule & Active Days</h2>
+            <p>Set specific days and hours when site blocking is automatically enforced.</p>
           </div>
-        </div>
 
-        <div class="card">
-          <h3>Daily Blocking Hours</h3>
-          <div class="time-row">
-            <div class="field">
-              <label for="start-time">Start Time (included)</label>
-              <input type="time" id="start-time" value="09:00">
-            </div>
-            <div class="field">
-              <label for="end-time">End Time (included)</label>
-              <input type="time" id="end-time" value="17:00">
+          <div class="card">
+            <h3>Active Days of the Week</h3>
+            <div class="days-grid">
+              <button class="day-chip" data-day="Mon">Monday</button>
+              <button class="day-chip" data-day="Tue">Tuesday</button>
+              <button class="day-chip" data-day="Wed">Wednesday</button>
+              <button class="day-chip" data-day="Thu">Thursday</button>
+              <button class="day-chip" data-day="Fri">Friday</button>
+              <button class="day-chip" data-day="Sat">Saturday</button>
+              <button class="day-chip" data-day="Sun">Sunday</button>
             </div>
           </div>
+
+          <div class="card">
+            <h3>Daily Blocking Hours</h3>
+            <div class="time-row">
+              <div class="field">
+                <label for="start-time">Start Time (included)</label>
+                <input type="time" id="start-time" value="09:00">
+              </div>
+              <div class="field">
+                <label for="end-time">End Time (included)</label>
+                <input type="time" id="end-time" value="17:00">
+              </div>
+            </div>
+          </div>
+
+          <div class="attention-card">
+            <span class="attention-icon">💡</span>
+            <p>When protection is active, restricted websites will display your curated quotes screen instead of distracting content.</p>
+          </div>
+        </section>
+
+        <!-- 2. BLOCKED SITES SECTION -->
+        <section id="section-sites" class="section">
+          <div class="section-header">
+            <h2>Blocked Sites</h2>
+            <p>Manage your personal list of websites restricted during active focus hours.</p>
+          </div>
+
+          <div class="card">
+            <h3>Add a Website</h3>
+            <div class="input-row">
+              <input type="text" id="options-site-input" placeholder="e.g. reddit.com or youtube.com">
+              <button id="options-add-btn" class="primary-btn">Add Site</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-flex">
+              <h3>Current Blocklist</h3>
+              <span id="options-site-count" class="badge">0</span>
+            </div>
+            <ul id="options-site-list" class="site-list"></ul>
+          </div>
+        </section>
+
+        <!-- 3. CUSTOM QUOTES SECTION -->
+        <section id="section-quotes" class="section">
+          <div class="section-header">
+            <h2>Motivational Quotes Library</h2>
+            <p>Select built-in quotes or add your own personal quotes to show on blocked pages.</p>
+          </div>
+
+          <div class="card">
+            <h3>Add Custom Quote</h3>
+            <div class="field-stack">
+              <input type="text" id="new-quote-text" placeholder="Enter an inspiring quote or personal message...">
+              <div class="input-row">
+                <input type="text" id="new-quote-author" placeholder="Author (optional, e.g. Marcus Aurelius)">
+                <button id="add-quote-btn" class="primary-btn">Add Quote</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-flex">
+              <h3>Quotes Selection</h3>
+              <span id="quotes-active-count" class="badge">0 Enabled</span>
+            </div>
+            <p class="card-desc">Check quotes to include them in the random rotation for blocked pages.</p>
+            <ul id="quotes-list" class="item-list"></ul>
+          </div>
+        </section>
+
+        <!-- 4. TYPING FRICTION SECTION -->
+        <section id="section-security" class="section">
+          <div class="section-header">
+            <h2>Typing Friction Sentences</h2>
+            <p>Select preset sentences or add your own. You must type one of these to pause protection.</p>
+          </div>
+
+          <div class="card">
+            <h3>Add Custom Challenge Sentence</h3>
+            <div class="input-row">
+              <input type="text" id="new-phrase-text" placeholder="e.g. I choose focus over temporary distraction">
+              <button id="add-phrase-btn" class="primary-btn">Add Sentence</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-flex">
+              <h3>Challenge Sentences Library</h3>
+              <span id="phrases-active-count" class="badge">0 Enabled</span>
+            </div>
+            <p class="card-desc">Selected sentences will be randomly required when attempting to pause the shield.</p>
+            <ul id="phrases-list" class="item-list"></ul>
+          </div>
+        </section>
+
+        <!-- Floating Save Action Bar -->
+        <div class="save-bar">
+          <span id="save-status">Settings saved locally.</span>
+          <button id="save-btn" class="primary-btn save-action">Save All Changes</button>
         </div>
 
-        <div class="attention-card">
-          <span class="attention-icon">⚠️</span>
-          <p>When the scheduled time has passed, type the website URL into the address bar manually to access it.</p>
-        </div>
-      </section>
+      </main>
 
-      <!-- 2. BLOCKED SITES SECTION -->
-      <section id="section-sites" class="section">
-        <div class="section-header">
-          <h2>Blocked Sites</h2>
-          <p>Manage your personal list of websites restricted during active focus hours.</p>
+      <!-- Right Column: Insights & Quick Actions Sidebar -->
+      <aside class="insights-panel">
+        
+        <!-- Widget 1: Master Shield Toggle & Live Status -->
+        <div class="widget-card status-widget">
+          <div class="widget-header">
+            <span class="widget-title">Shield Protection Status</span>
+            <span id="live-status-dot" class="status-indicator active"></span>
+          </div>
+          <div class="status-box">
+            <div class="status-main-text" id="live-status-title">Protection Active</div>
+            <div class="status-sub-text" id="live-status-subtitle">Blocking 0 websites according to schedule</div>
+          </div>
+          <button id="quick-toggle-shield-btn" class="widget-action-btn">
+            <span id="toggle-shield-icon">⏸️</span> <span id="toggle-shield-text">Pause Shield</span>
+          </button>
         </div>
 
-        <div class="card">
-          <h3>Add a Website</h3>
-          <div class="input-row">
-            <input type="text" id="options-site-input" placeholder="e.g. reddit.com or youtube.com">
-            <button id="options-add-btn" class="primary-btn">Add Site</button>
+        <!-- Widget 2: Focus Analytics Summary -->
+        <div class="widget-card analytics-widget">
+          <div class="widget-header">
+            <span class="widget-title">Dashboard Overview</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-box">
+              <span class="stat-number" id="stat-sites-count">0</span>
+              <span class="stat-label">Sites Blocked</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="stat-days-count">5</span>
+              <span class="stat-label">Active Days</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="stat-quotes-count">0</span>
+              <span class="stat-label">Quotes Active</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="stat-phrases-count">0</span>
+              <span class="stat-label">Phrases Active</span>
+            </div>
           </div>
         </div>
 
-        <div class="card">
-          <h3>Current Blocklist <span id="options-site-count" class="badge">0</span></h3>
-          <ul id="options-site-list" class="site-list"></ul>
-        </div>
-      </section>
-
-      <!-- 3. FOCUS TIMER SECTION -->
-      <!-- <section id="section-timer" class="section">
-        <div class="section-header">
-          <h2>Pomodoro & Focus Timer</h2>
-          <p>Configure default focus session lengths for quick work sprints.</p>
-        </div>
-
-        <div class="card">
-          <h3>Default Session Length</h3>
-          <div class="preset-grid">
-            <button class="preset-btn" data-minutes="25">25 Min (Pomodoro)</button>
-            <button class="preset-btn" data-minutes="45">45 Min (Deep Work)</button>
-            <button class="preset-btn" data-minutes="60">60 Min (Extended)</button>
+        <!-- Widget 3: Live Quotes Preview Widget -->
+        <div class="widget-card preview-widget">
+          <div class="widget-header">
+            <span class="widget-title">Live Quote Preview</span>
+            <button id="shuffle-preview-btn" class="icon-text-btn" title="Show another quote">🎲 Shuffle</button>
           </div>
-          <div class="field" style="margin-top: 16px;">
-            <label for="custom-minutes">Custom Duration (Minutes)</label>
-            <input type="number" id="custom-minutes" min="1" max="480" value="25">
+          <div class="quote-preview-box">
+            <p id="preview-quote-body">"Concentrate all your thoughts upon the work in hand."</p>
+            <span id="preview-quote-author">— Alexander Graham Bell</span>
           </div>
         </div>
-      </section> -->
 
-      <!-- 4. CUSTOM QUOTES SECTION -->
-      <section id="section-quotes" class="section">
-        <div class="section-header">
-          <h2>Custom Motivational Quotes</h2>
-          <p>Personalize the text that displays when you attempt to visit a blocked website.</p>
-        </div>
-
-        <div class="card">
-          <h3>Personal Motivation Banner</h3>
-          <div class="field">
-            <label for="custom-quote">Your Personal Words / Quote</label>
-            <textarea id="custom-quote" rows="4" placeholder="Write a message to remind yourself of your goals..."></textarea>
-            <small class="field-hint">Leave blank to display a random quote from famous authors.</small>
-          </div>
-          <div class="quote-preview">
-            <span class="preview-label">Preview on Blocked Screen:</span>
-            <blockquote id="quote-preview-text">"Concentrate all your thoughts upon the work in hand."</blockquote>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. TYPING FRICTION SECTION -->
-      <section id="section-security" class="section">
-        <div class="section-header">
-          <h2>Typing Challenge Phrase</h2>
-          <p>Customize the sentence you must type before pausing FocusShield.</p>
-        </div>
-
-        <div class="card">
-          <h3>Custom Phrase</h3>
-          <div class="field">
-            <label for="custom-phrase">Required Typing Sentence</label>
-            <input type="text" id="custom-phrase" placeholder="e.g. I choose focus over distraction">
-            <small class="field-hint">Leave blank to use randomized default phrases.</small>
-          </div>
-        </div>
-      </section>
-
-      <!-- Save Floating Action Bar -->
-      <div class="save-bar">
-        <span id="save-status">Settings saved locally.</span>
-        <button id="save-btn" class="primary-btn">Save All Changes</button>
-      </div>
-
-    </main>
+      </aside>
+    </div>
   </div>
 
   <!-- Toast Notification -->

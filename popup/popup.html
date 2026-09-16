@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <title>FocusShield</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
   <link rel="stylesheet" href="popup.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <!-- Header with Brand & Settings Gear -->
+    <!-- Header with Brand & Settings Gear & Theme Switcher -->
     <header>
       <div class="brand">
-        <span class="logo">🛡️</span>
+        <img src="../icons/icon.svg" class="logo-img" alt="FocusShield Logo">
         <h2>FocusShield</h2>
       </div>
-      <button id="open-settings-btn" class="icon-btn" title="Open Full Settings">⚙️</button>
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme">☀️</button>
+        <button id="open-settings-btn" class="icon-btn" title="Open Dashboard Settings">⚙️</button>
+      </div>
     </header>
 
     <!-- Protection Status & Pause Button -->
@@ -28,7 +32,7 @@
 
     <!-- Quick Add Site -->
     <div class="input-group">
-      <input type="text" id="site-input" placeholder="Add website e.g. reddit.com">
+      <input type="text" id="site-input" placeholder="Add site e.g. reddit.com">
       <button id="add-btn">Add</button>
     </div>
 
@@ -39,20 +43,6 @@
         <span id="site-count" class="badge">0</span>
       </div>
       <ul id="site-list"></ul>
-    </div>
-  </div>
-
-  <!-- TYPING CHALLENGE MODAL -->
-  <div id="challenge-modal" class="modal-overlay hidden">
-    <div class="modal">
-      <h3>⚠️ Pause Protection</h3>
-      <p class="modal-desc">Type the phrase below to pause FocusShield:</p>
-      <div id="challenge-phrase" class="phrase-box">I will stay disciplined</div>
-      <input type="text" id="challenge-input" placeholder="Type sentence here..." autocomplete="off">
-      <div class="modal-actions">
-        <button id="cancel-challenge-btn" class="modal-cancel">Cancel</button>
-        <button id="confirm-challenge-btn" class="modal-confirm" disabled>Pause Shield</button>
-      </div>
     </div>
   </div>
 

@@ -8,14 +8,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   const defaultPhrases = [
     "I choose focus over distraction",
     "I will stay disciplined today",
-    "Short term pleasure ruins long term goals"
+    "Short term pleasure ruins long term goals",
+    "Deep focus creates great results"
   ];
 
-  // Fetch custom phrase from storage
-  const data = await browser.storage.local.get(['customPhrase']);
-  
+  // Fetch data from storage
+  const data = await browser.storage.local.get(['theme', 'phrases', 'customPhrase']);
+
+  if (data.theme) {
+    document.documentElement.setAttribute('data-theme', data.theme);
+  }
+
+  let phrasePool = [];
+  if (Array.isArray(data.phrases) && data.phrases.length > 0) {
+    phrasePool = data.phrases.filter(p => p.enabled).map(p => p.text);
+  }
+
   let target = "";
-  if (data.customPhrase && data.customPhrase.trim().length > 0) {
+  if (phrasePool.length > 0) {
+    target = phrasePool[Math.floor(Math.random() * phrasePool.length)];
+  } else if (data.customPhrase && data.customPhrase.trim().length > 0) {
     target = data.customPhrase.trim();
   } else {
     target = defaultPhrases[Math.floor(Math.random() * defaultPhrases.length)];
@@ -24,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   phraseBox.textContent = target;
   input.focus();
 
-  // Handle typing progress & enable/disable confirm button
+  // Handle typing progress
   input.addEventListener('input', () => {
     const typed = input.value.trim();
     const progress = Math.min((input.value.length / target.length) * 100, 100);

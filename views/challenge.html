@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>FocusShield — Pause Protection</title>
-    <link rel="stylesheet" href="challenge.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocusShield — Typing Challenge</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
+  <link rel="stylesheet" href="challenge.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="card">
-        <div class="shield-icon">🛡️</div>
-        <h1>Pause Protection?</h1>
-        <p class="desc">To pause FocusShield, type this phrase exactly:</p>
+  <div class="card">
+    <img src="../icons/icon.svg" class="badge-icon-img" alt="FocusShield">
+    <h1>Pause Protection</h1>
+    <p class="desc">To pause FocusShield, type this phrase exactly:</p>
 
-        <div class="phrase-box" id="challenge-phrase">Loading...</div>
+    <div id="challenge-phrase" class="phrase-box">I choose focus over distraction</div>
 
-        <input type="text" id="challenge-input" placeholder="Type the phrase above..." autocomplete="off"
-            spellcheck="false">
+    <input type="text" id="challenge-input" placeholder="Type phrase here..." autocomplete="off" spellcheck="false">
 
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-        </div>
-
-        <div class="actions">
-            <button id="cancel-btn">Cancel</button>
-            <button id="confirm-btn" disabled>Pause Shield</button>
-        </div>
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-fill"></div>
     </div>
 
-    <script src="challenge.js"></script>
-</body>
+    <div class="actions">
+      <button id="cancel-btn">Cancel</button>
+      <button id="confirm-btn" disabled>Pause Protection</button>
+    </div>
+  </div>
 
+  <script src="challenge.js"></script>
+</body>
 </html>
