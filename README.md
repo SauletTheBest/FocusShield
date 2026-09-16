@@ -126,10 +126,10 @@ FocusShield/
 
 ## 🛡️ Privacy & Permissions
 
-* `storage`: Stores your blocklist, schedules, quotes, and theme preferences locally.
-* `declarativeNetRequest` / `tabs`: Intercepts and redirects blocked URLs to the quotes landing screen.
-* `alarms`: Checks active schedule hours at regular intervals without draining battery.
-* **No external network requests are ever made.**
+ `storage`: Stores your blocklist, schedules, quotes, and theme preferences locally.
+ `declarativeNetRequest` / `tabs`: Intercepts and redirects blocked URLs to the quotes landing screen.
+ `alarms`: Checks active schedule hours at regular intervals without draining battery.
+ **No external network requests are ever made.**
 
 ---
 
