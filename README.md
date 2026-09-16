@@ -14,9 +14,9 @@
 </div>
 
 ---
-
+<div align="center"
 ## 📖 Overview
-
+</div>
 **FocusShield** is an elegant, privacy-first browser extension designed to help you stay disciplined during work hours. By combining customizable focus schedules, dynamic website blocking, anti-cheat typing challenges, and inspirational quotes, FocusShield turns mindless tab-opening into mindful productivity.
 
 ---
