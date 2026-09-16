@@ -9,7 +9,6 @@
   [![Manifest V3](https://img.shields.io/badge/Manifest-V3-1a73e8.svg?style=flat-square)](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json)
   [![Firefox Add-ons](https://img.shields.io/badge/Firefox-Add--ons-FF7139.svg?style=flat-square&logo=firefox-browser)](https://addons.mozilla.org/)
   [![Privacy Friendly](https://img.shields.io/badge/Privacy-100%25%20Local-10b981.svg?style=flat-square)](https://github.com/)
-  [![License](https://img.shields.io/badge/License-MIT-6366f1.svg?style=flat-square)](LICENSE)
 
 </div>
 
